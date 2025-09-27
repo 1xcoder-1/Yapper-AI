@@ -2,7 +2,6 @@
 
 Welcome to **Yapper AI** – an innovative chatbot that offers numerous companions to talk to, each with a unique personality based on current world trends. Whether you're looking for a friendly chat, intellectual discussion, or some lighthearted fun, Yapper AI has it all!
 
-🚀 **[Yapper AI - Live App](https://yapper-ai.vercel.app/)**
 
 ## 📚 Overview
 
@@ -48,17 +47,6 @@ git push origin feature/your-feature
 please make sure your code adheres to our coding standards and is well documented.
 
 ## 📄 License
-
-This project is open source under the MIT License. Feel free to use it as you see fit.
-
-## 🌐 Links
-
-- **Live App:** [Yapper AI](https://yapper-ai.vercel.app/)
-- **Github Repository URL:** [Yapper AI Github](https://github.com/Ganesh-Sharmaz/YapperAI)
-
-## ✨ Contributors
-
-Thanks to all the amazing developers who have contributed to the project.
 
 
 
