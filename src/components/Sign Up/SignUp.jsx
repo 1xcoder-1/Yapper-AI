@@ -1,0 +1,52 @@
+
+import React from "react";
+
+import Hero from "../Hero/Hero.jsx";
+import { Suspense } from "react";
+import About from "../About/About.jsx";
+
+const LazyFeatures = React.lazy(() => import("../Features/Features.jsx"))
+const LazyBuildInfo = React.lazy(() => import("../BuildInfo/BuildInfo.jsx"))
+const LazyTestimonials = React.lazy(() => import("../Testimonials/Testimonial.jsx"))
+const LazyCTA = React.lazy(() => import("../CallToAction/CallToAction.jsx"))
+
+function SignUp() {
+    
+    return (
+        <div className="w-full md:px-10 h-fit px-5 px">
+            <Hero />
+
+            {/* Home page */}
+
+            <Suspense fallback="Loading...">
+            <div className="font-outfit min-h-screen text-white flex flex-col ">
+                {/* Features Section */}
+                <Suspense fallback="Loading...">
+                    <LazyFeatures/>
+                </Suspense>
+                
+
+                {/* Build Info Section */}
+                <Suspense fallback="Loading...">
+                    <LazyBuildInfo/>
+                </Suspense>
+
+                {/* Testimonials Section */}
+                <Suspense fallback="Loading...">
+                    <LazyTestimonials/>
+                </Suspense>
+
+                {/* Call to Action */}
+                <Suspense fallback="Loading...">
+                    <LazyCTA/>
+                </Suspense>
+
+                {/* Developer Section */}
+                <About/>
+            </div>
+            </Suspense>
+        </div>
+    );
+}
+
+export default SignUp;
