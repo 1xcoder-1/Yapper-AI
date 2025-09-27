@@ -42,11 +42,6 @@ git commit -m "Add some features"
 ```bash
 git push origin feature/your-feature
 ```
-5.Open a pull request
-
-please make sure your code adheres to our coding standards and is well documented.
-
-## 📄 License
 
 
 
