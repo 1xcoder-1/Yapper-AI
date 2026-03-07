@@ -103,7 +103,7 @@ function Home() {
             console.log(import.meta.env.VITE_REACT_GEMINI_API);
 
             try {
-                const apiKey = "AIzaSyCLgbTYhQViP5ddNnw_piNV9Wf7tIcBDEc";
+                const apiKey = import.meta.env.VITE_REACT_GEMINI_API;
 
                 if (!apiKey) {
                     throw new Error(
@@ -113,7 +113,7 @@ function Home() {
 
                 const genAI = new GoogleGenerativeAI(apiKey);
                 const model = genAI.getGenerativeModel({
-                    model: "gemini-2.0-flash",
+                    model: "gemini-2.5-flash",
                 });
 
                 const prompt = `Give response in ${VoiceList[currentVoice].prompt} to the further message, ${inputValue}`;
@@ -151,6 +151,8 @@ function Home() {
 
                 if (error.message.includes("API key")) {
                     errorMessage += "Please check your API key configuration.";
+                } else if (error.message.includes("429") || error.message.toLowerCase().includes("quota")) {
+                    errorMessage += "API Quota exceeded. Please wait a moment before trying again.";
                 } else {
                     errorMessage += "Please try again later.";
                 }
@@ -185,30 +187,27 @@ function Home() {
     return (
         <div className="relative px-5 w-full flex flex-col justify-center items-center flex-grow font-outfit md:mx-72 pt-3 md:px-5 bg-[#0A0A0F]">
             {/* Voice selector for big screens */}
-            
+
             <div className="md:flex md:justify-around justify-stretch items-center p-4 bg-[#1A1A1F]/90 backdrop-blur-md m-2 md:p-3 md:w-full md:items-center cursor-pointer rounded-xl md:z-0 z-10 md:relative hidden border border-[#2A2A2F]/50 shadow-[0_0_20px_rgba(0,0,0,0.4)] hover:shadow-[0_0_25px_rgba(255,0,255,0.1)] transition-all duration-500">
                 {VoiceList.map((voice, index) => (
                     <button
                         onClick={() => handleActive(index)}
-                        className={`group relative transition-all duration-500 px-4 py-2 rounded-lg overflow-hidden ${
-                            activityIndex === index
-                                ? "bg-gradient-to-r from-[#FF00FF] to-[#FF4500] text-white shadow-[0_0_20px_rgba(255,0,255,0.3)] scale-105"
-                                : "bg-[#1A1A1F] text-[#E0E0E0] hover:bg-[#2A2A2F] hover:shadow-[0_0_15px_rgba(255,0,255,0.15)]"
-                        }`}
+                        className={`group relative transition-all duration-500 px-4 py-2 rounded-lg overflow-hidden ${activityIndex === index
+                            ? "bg-gradient-to-r from-[#FF00FF] to-[#FF4500] text-white shadow-[0_0_20px_rgba(255,0,255,0.3)] scale-105"
+                            : "bg-[#1A1A1F] text-[#E0E0E0] hover:bg-[#2A2A2F] hover:shadow-[0_0_15px_rgba(255,0,255,0.15)]"
+                            }`}
                         key={index}
                     >
                         <span className="relative z-10 font-medium">
                             {voice.person}
                         </span>
                         <div
-                            className={`absolute inset-0 bg-gradient-to-r from-[#FF00FF]/20 to-[#FF4500]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
-                                activityIndex === index ? "opacity-100" : ""
-                            }`}
+                            className={`absolute inset-0 bg-gradient-to-r from-[#FF00FF]/20 to-[#FF4500]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${activityIndex === index ? "opacity-100" : ""
+                                }`}
                         ></div>
                         <div
-                            className={`absolute -bottom-1 left-0 w-full h-[2px] bg-gradient-to-r from-[#FF00FF] to-[#FF4500] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ${
-                                activityIndex === index ? "scale-x-100" : ""
-                            }`}
+                            className={`absolute -bottom-1 left-0 w-full h-[2px] bg-gradient-to-r from-[#FF00FF] to-[#FF4500] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ${activityIndex === index ? "scale-x-100" : ""
+                                }`}
                         ></div>
                     </button>
                 ))}
@@ -241,29 +240,26 @@ function Home() {
                             <DropdownItem
                                 key={msg.person}
                                 textValue={msg.person}
-                                className={`group relative transition-all duration-500 font-outfit p-2 rounded-lg ${
-                                    activityIndex === index
-                                        ? "bg-gradient-to-r from-[#FF00FF] to-[#FF4500] text-white"
-                                        : "text-[#E0E0E0] hover:bg-[#2A2A2F]"
-                                }`}
+                                className={`group relative transition-all duration-500 font-outfit p-2 rounded-lg ${activityIndex === index
+                                    ? "bg-gradient-to-r from-[#FF00FF] to-[#FF4500] text-white"
+                                    : "text-[#E0E0E0] hover:bg-[#2A2A2F]"
+                                    }`}
                                 onClick={() => handleActive(index)}
                             >
                                 <span className="relative z-10">
                                     {msg.person}
                                 </span>
                                 <div
-                                    className={`absolute inset-0 bg-gradient-to-r from-[#FF00FF]/20 to-[#FF4500]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
-                                        activityIndex === index
-                                            ? "opacity-100"
-                                            : ""
-                                    }`}
+                                    className={`absolute inset-0 bg-gradient-to-r from-[#FF00FF]/20 to-[#FF4500]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${activityIndex === index
+                                        ? "opacity-100"
+                                        : ""
+                                        }`}
                                 ></div>
                                 <div
-                                    className={`absolute -bottom-1 left-0 w-full h-[2px] bg-gradient-to-r from-[#FF00FF] to-[#FF4500] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ${
-                                        activityIndex === index
-                                            ? "scale-x-100"
-                                            : ""
-                                    }`}
+                                    className={`absolute -bottom-1 left-0 w-full h-[2px] bg-gradient-to-r from-[#FF00FF] to-[#FF4500] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ${activityIndex === index
+                                        ? "scale-x-100"
+                                        : ""
+                                        }`}
                                 ></div>
                             </DropdownItem>
                         ))}
@@ -281,19 +277,17 @@ function Home() {
                     {chatHistory.map((msg, index) => (
                         <div
                             key={index}
-                            className={`w-full animate-fadeIn flex ${
-                                msg.type === "user"
-                                    ? "justify-end"
-                                    : "justify-start"
-                            }`}
+                            className={`w-full animate-fadeIn flex ${msg.type === "user"
+                                ? "justify-end"
+                                : "justify-start"
+                                }`}
                         >
                             <div className="flex flex-col">
                                 <div
-                                    className={`px-5 py-3 rounded-xl backdrop-blur-sm ${
-                                        msg.type === "user"
-                                            ? "bg-gradient-to-r from-[#1A1A1F] to-[#2A2A2F] text-white text-right text-pretty w-fit border border-[#3A3A3F]/30 shadow-[0_0_15px_rgba(0,0,0,0.3)] hover:shadow-[0_0_20px_rgba(255,0,255,0.1)] transition-all duration-300"
-                                            : "bg-gradient-to-r from-[#1A1A1F] to-[#2A2A2F] text-white text-left text-pretty w-fit border border-[#3A3A3F]/30 shadow-[0_0_15px_rgba(0,0,0,0.3)] hover:shadow-[0_0_20px_rgba(255,0,255,0.1)] transition-all duration-300"
-                                    }`}
+                                    className={`px-5 py-3 rounded-xl backdrop-blur-sm ${msg.type === "user"
+                                        ? "bg-gradient-to-r from-[#1A1A1F] to-[#2A2A2F] text-white text-right text-pretty w-fit border border-[#3A3A3F]/30 shadow-[0_0_15px_rgba(0,0,0,0.3)] hover:shadow-[0_0_20px_rgba(255,0,255,0.1)] transition-all duration-300"
+                                        : "bg-gradient-to-r from-[#1A1A1F] to-[#2A2A2F] text-white text-left text-pretty w-fit border border-[#3A3A3F]/30 shadow-[0_0_15px_rgba(0,0,0,0.3)] hover:shadow-[0_0_20px_rgba(255,0,255,0.1)] transition-all duration-300"
+                                        }`}
                                 >
                                     <ReactMarkdown
                                         rehypePlugins={[rehypeHighlight]}
